@@ -10,9 +10,11 @@ LEARNING_RATE_BASE = 0.001
 LEARNING_RATE_DECAY = 0.99
 BATCH_SIZE = 25
 REGULARIZATION_RATE = 0.01
-TRAINING_STEPS = 50000
+TRAINING_STEPS = 5000
 MOVING_AVERAGE_DECAY = 0.99
 NUM_EXAMPLE = 308
+TRAINING_EXAMPLE = 300
+TEST_EXAMPLE = 8
 
 
 def train():
@@ -53,12 +55,12 @@ def train():
         pred_list = []
         true_list = []
         for i in range(TRAINING_STEPS):
-            xs = features[i % NUM_EXAMPLE]
+            xs = features[i % TRAINING_EXAMPLE]
             xs = xs[0:1024]
-            ys = labels[i % NUM_EXAMPLE]
+            ys = labels[i % TRAINING_EXAMPLE]
             for j in range(BATCH_SIZE - 1):
-                xs = np.append(xs, features[(i + j) % NUM_EXAMPLE, 0:1024])
-                ys = np.append(ys, labels[(i + j) % NUM_EXAMPLE])
+                xs = np.append(xs, features[(i + j) % TRAINING_EXAMPLE, 0:1024])
+                ys = np.append(ys, labels[(i + j) % TRAINING_EXAMPLE])
             xs = np.reshape(xs, [-1, 1024])
             ys = np.reshape(ys, [-1, 1])
             _, y_pred, y_true, loss_value = sess.run([train_op, y, y_, mse_mean],
@@ -69,10 +71,10 @@ def train():
             if i % 100 == 0:
                 print(
                     "After %d training step(s), mse loss mean on training batch is %g. R2 is %g" % (i, loss_value, acc))
-        for i in range(NUM_EXAMPLE):
-            xs = features[i]
+        for i in range(TEST_EXAMPLE):
+            xs = features[TRAINING_EXAMPLE+i]
             xs = xs[0:1024]
-            ys = labels[i]
+            ys = labels[TRAINING_EXAMPLE+i]
             xs = np.reshape(xs, [-1, 1024])
             ys = np.reshape(ys, [-1, 1])
             y1, y2 = sess.run([y, y_], feed_dict={x: xs,
@@ -82,7 +84,7 @@ def train():
             pred_list.append(y1)
             true_list.append(y2)
         r2 = r2_score(true_list, pred_list)
-        print("Test r2 is:", r2)
+        print("Test R2 is:", r2)
     # fig = plt.figure()
     # x = range(0, TRAINING_STEPS)
     # ax = plt.subplot()
