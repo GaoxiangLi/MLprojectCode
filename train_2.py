@@ -24,14 +24,15 @@ def train():
     y_ = tf.placeholder(tf.float32, [None, 1], name='y-input')
 
     regularizer = tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)
-    y = inference_2.inference(x, regularizer)
-    # y = inference_2.inference2(x, regularizer)
+    # y = inference_2.inference(x, regularizer)
+    y = inference_2.inference2(x)
 
     global_step = tf.Variable(0, trainable=False)
     variable_averages = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)
     variables_averages_op = variable_averages.apply(tf.trainable_variables())
     mse = tf.reduce_mean(tf.square(y_ - y))
     mse_mean = tf.reduce_mean(mse)
+
     loss = mse_mean + tf.add_n(tf.get_collection('losses'))
 
     learning_rate = tf.train.exponential_decay(
@@ -89,21 +90,22 @@ def train():
             if i % 100 == 0:
                 print(
                     "After %d training step(s), mse loss mean on training batch is %g. R2 is %g" % (i, loss_value, acc))
-        # testing
-        TEST_EXAMPLE = len(test_feature)
-        for i in range(TEST_EXAMPLE):
-            xs = test_feature[i]
-            ys = test_label[i]
-            xs = np.reshape(xs, [-1, 1024])
-            ys = np.reshape(ys, [-1, 1])
-            y1, y2 = sess.run([y, y_], feed_dict={x: xs,
-                                                  y_: ys})
-            y1 = y1[0]
-            y2 = y2[0]
-            pred_list.append(y1)
-            true_list.append(y2)
-        r2 = r2_score(true_list, pred_list)
-        print("Test R2 is:", r2)
+            # testing
+            if i % 1000 == 0:
+                TEST_EXAMPLE = len(test_feature)
+                for j in range(TEST_EXAMPLE):
+                    xs = test_feature[j]
+                    ys = test_label[j]
+                    xs = np.reshape(xs, [-1, 1024])
+                    ys = np.reshape(ys, [-1, 1])
+                    y1, y2 = sess.run([y, y_], feed_dict={x: xs,
+                                                          y_: ys})
+                    y1 = y1[0]
+                    y2 = y2[0]
+                    pred_list.append(y1)
+                    true_list.append(y2)
+                r2 = r2_score(true_list, pred_list)
+                print("Test R2 is:", r2)
         # for i in range(TRAINING_STEPS):
         #     xs = features[i % TRAINING_EXAMPLE]
         #     xs = xs[0:1024]

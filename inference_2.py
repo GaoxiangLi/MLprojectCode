@@ -7,6 +7,7 @@ INPUT_NODE = 1024
 OUTPUT_NODE = 1
 LAYER1_NODE = 512
 LAYER2_NODE = 128
+REGULARIZATION_RATE = 0.01
 
 
 def get_weight_variable(shape, regularizer):
@@ -33,13 +34,13 @@ def inference(input_tensor, regularizer):
     return layer3
 
 
-def inference2(input_tensor, regularizer):
+def inference2(input_tensor):
     input_tensor = tf.reshape(input_tensor, [-1, 32, 32, 1])
     with tf.variable_scope('layer1-conv1'):
         conv1_weights = tf.get_variable(
-            "weight", [5, 5, 1, 32],
+            "weight", [3, 3, 1, 32],
             initializer=tf.truncated_normal_initializer(stddev=0.1))
-        if regularizer != None: tf.add_to_collection('losses', regularizer(conv1_weights))
+        tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(conv1_weights))
         conv1_biases = tf.get_variable("bias", [32], initializer=tf.constant_initializer(0.0))
         conv1 = tf.nn.conv2d(input_tensor, conv1_weights, strides=[1, 1, 1, 1], padding='SAME')
         relu1 = tf.nn.relu(tf.nn.bias_add(conv1, conv1_biases))
@@ -49,9 +50,9 @@ def inference2(input_tensor, regularizer):
 
     with tf.variable_scope("layer3-conv2"):
         conv2_weights = tf.get_variable(
-            "weight", [5, 5, 32, 64],
+            "weight", [3, 3, 32, 64],
             initializer=tf.truncated_normal_initializer(stddev=0.1))
-        if regularizer != None: tf.add_to_collection('losses', regularizer(conv2_weights))
+        tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(conv2_weights))
         conv2_biases = tf.get_variable("bias", 64, initializer=tf.constant_initializer(0.0))
         conv2 = tf.nn.conv2d(pool1, conv2_weights, strides=[1, 1, 1, 1], padding='SAME')
         relu2 = tf.nn.relu(tf.nn.bias_add(conv2, conv2_biases))
@@ -65,7 +66,7 @@ def inference2(input_tensor, regularizer):
     with tf.variable_scope('layer5-fc1'):
         fc1_weights = tf.get_variable("weight", [nodes, 512],
                                       initializer=tf.truncated_normal_initializer(stddev=0.1))
-        if regularizer != None: tf.add_to_collection('losses', regularizer(fc1_weights))
+        tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(fc1_weights))
         fc1_biases = tf.get_variable("bias", [512], initializer=tf.constant_initializer(0.1))
 
         fc1 = tf.nn.relu(tf.matmul(reshaped, fc1_weights) + fc1_biases)
@@ -73,7 +74,7 @@ def inference2(input_tensor, regularizer):
     with tf.variable_scope('layer5-fc2'):
         fc2_weights = tf.get_variable("weight", [512, 128],
                                       initializer=tf.truncated_normal_initializer(stddev=0.1))
-        if regularizer != None: tf.add_to_collection('losses', regularizer(fc2_weights))
+        tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(fc2_weights))
         fc2_biases = tf.get_variable("bias", [128], initializer=tf.constant_initializer(0.1))
 
         fc2 = tf.nn.relu(tf.matmul(fc1, fc2_weights) + fc2_biases)
@@ -81,7 +82,7 @@ def inference2(input_tensor, regularizer):
     with tf.variable_scope('layer6-fc3'):
         fc3_weights = tf.get_variable("weight", [128, 1],
                                       initializer=tf.truncated_normal_initializer(stddev=0.1))
-        if regularizer != None: tf.add_to_collection('losses', regularizer(fc3_weights))
+        tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(fc3_weights))
         fc3_biases = tf.get_variable("bias", [1], initializer=tf.constant_initializer(0.1))
         logit = tf.matmul(fc2, fc3_weights) + fc3_biases
     logit = np.reshape(logit, [1])

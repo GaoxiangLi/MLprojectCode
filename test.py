@@ -26,18 +26,20 @@ test_feature = []
 test_label = []
 # for i in range(NUM_EXAMPLE):
 #     np.pad(features[i], (34, 35), 'constant')
-for i in range(NUM_EXAMPLE):
-    if i % 8 == 0 or i % 9 == 0:
-        test_feature = np.append(test_feature, np.pad(features[i], (34, 35), 'constant'))
-        test_label = np.append(test_label, labels[i])
-    else:
-        training_feature = np.append(training_feature, np.pad(features[i], (34, 35), 'constant'))
-        training_label = np.append(training_label, labels[i])
-training_feature = np.reshape(training_feature, [-1, 1156])
-test_feature = np.reshape(test_feature, [-1, 1156])
-print(len(training_label))
-print(len(training_feature))
-print(len(test_feature))
-print(len(test_label))
-
-
+# for i in range(NUM_EXAMPLE):
+#     if i % 8 == 0 or i % 9 == 0:
+#         test_feature = np.append(test_feature, np.pad(features[i], (34, 35), 'constant'))
+#         test_label = np.append(test_label, labels[i])
+#     else:
+#         training_feature = np.append(training_feature, np.pad(features[i], (34, 35), 'constant'))
+#         training_label = np.append(training_label, labels[i])
+# training_feature = np.reshape(training_feature, [-1, 1156])
+# test_feature = np.reshape(test_feature, [-1, 1156])
+# print(len(training_label))
+# print(len(training_feature))
+# print(len(test_feature))
+# print(len(test_label))
+y1 = [[1.1234],[2]]
+y2 = [[1],[2]]
+acc = r2_score(y1, y2)
+print(acc)
