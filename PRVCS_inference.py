@@ -3,9 +3,9 @@ import numpy as np
 import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-INPUT_NODE = 1156
+INPUT_NODE = 81
 OUTPUT_NODE = 1
-LAYER1_NODE = 256
+LAYER1_NODE = 32
 LAYER2_NODE = 128
 REGULARIZATION_RATE = 0.01
 
@@ -16,23 +16,21 @@ def get_weight_variable(shape, regularizer):
     return weights
 
 
-# decrease the num of layers and nodes
-def inference(input_tensor, regularizer):
+def inference1(input_tensor, regularizer):
     with tf.variable_scope('layer1'):
         weights = get_weight_variable([INPUT_NODE, LAYER1_NODE], regularizer)
         biases = tf.get_variable("biases", [LAYER1_NODE], initializer=tf.constant_initializer(0.0))
         layer1 = tf.nn.relu(tf.matmul(input_tensor, weights) + biases)
-        layer1_dropout = tf.nn.dropout(layer1, 0.5)
 
     with tf.variable_scope('layer2'):
         weights = get_weight_variable([LAYER1_NODE, OUTPUT_NODE], regularizer)
         biases = tf.get_variable("biases", [OUTPUT_NODE], initializer=tf.constant_initializer(0.0))
-        layer2 = tf.matmul(layer1_dropout, weights) + biases
+        layer2 = tf.matmul(layer1, weights) + biases
     return layer2
 
 
 def inference2(input_tensor, drop_rate):
-    input_tensor = tf.reshape(input_tensor, [-1, 34, 34, 1])
+    input_tensor = tf.reshape(input_tensor, [-1, 9, 9, 1])
     with tf.variable_scope('layer1-conv1'):
         conv1_weights = tf.get_variable(
             "weight", [3, 3, 1, 2],
@@ -68,7 +66,6 @@ def inference2(input_tensor, drop_rate):
 
         fc1 = tf.nn.relu(tf.matmul(reshaped, fc1_weights) + fc1_biases)
         fc1 = tf.nn.dropout(fc1, drop_rate)
-
 
     with tf.variable_scope('layer6-fc2'):
         fc2_weights = tf.get_variable("weight", [512, 1],
