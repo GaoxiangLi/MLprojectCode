@@ -4,9 +4,9 @@ import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 INPUT_NODE = 81
-OUTPUT_NODE = 1
-LAYER1_NODE = 32
-LAYER2_NODE = 128
+OUTPUT_NODE = 2
+LAYER1_NODE = 128
+# LAYER2_NODE = 32
 REGULARIZATION_RATE = 0.01
 
 
@@ -59,20 +59,20 @@ def inference2(input_tensor, drop_rate):
         reshaped = tf.reshape(pool2, [-1, nodes])
 
     with tf.variable_scope('layer5-fc1'):
-        fc1_weights = tf.get_variable("weight", [nodes, 512],
+        fc1_weights = tf.get_variable("weight", [nodes, 128],
                                       initializer=tf.truncated_normal_initializer(stddev=0.1))
         tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(fc1_weights))
-        fc1_biases = tf.get_variable("bias", [512], initializer=tf.constant_initializer(0.1))
+        fc1_biases = tf.get_variable("bias", [128], initializer=tf.constant_initializer(0.1))
 
         fc1 = tf.nn.relu(tf.matmul(reshaped, fc1_weights) + fc1_biases)
         fc1 = tf.nn.dropout(fc1, drop_rate)
 
     with tf.variable_scope('layer6-fc2'):
-        fc2_weights = tf.get_variable("weight", [512, 1],
+        fc2_weights = tf.get_variable("weight", [128, 2],
                                       initializer=tf.truncated_normal_initializer(stddev=0.1))
         tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(fc2_weights))
-        fc2_biases = tf.get_variable("bias", [1], initializer=tf.constant_initializer(0.1))
+        fc2_biases = tf.get_variable("bias", [2], initializer=tf.constant_initializer(0.1))
         logit = tf.matmul(fc1, fc2_weights) + fc2_biases
-    logit = np.reshape(logit, [1])
-    logit = logit[0]
+    # logit = np.reshape(logit, [2])
+    # logit = logit[0]
     return logit
