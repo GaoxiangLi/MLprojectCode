@@ -18,7 +18,6 @@ NUM_EXAMPLE = 60977
 
 
 def train():
-    # regularizer = tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)
     x = tf.placeholder(tf.float32, [None, 81], name='x-input')
     y_ = tf.placeholder(tf.float32, [None, 2], name='y-input')
     drop_rate = tf.placeholder(tf.float32, name='drop_rate')
@@ -47,10 +46,10 @@ def train():
 
         # load data
         print("Loading data")
-        training_feature = np.loadtxt('./training_feature2.csv', delimiter=',')
-        training_label = np.loadtxt('./training_label2.csv', delimiter=',')
-        test_feature = np.loadtxt('./test_feature2.csv', delimiter=',')
-        test_label = np.loadtxt('./test_label2.csv', delimiter=',')
+        training_feature = np.loadtxt('./training_feature5.csv', delimiter=',')
+        training_label = np.loadtxt('./training_label5.csv', delimiter=',')
+        test_feature = np.loadtxt('./test_feature5.csv', delimiter=',')
+        test_label = np.loadtxt('./test_label5.csv', delimiter=',')
 
         training_feature = np.reshape(training_feature, [-1, 81])
         test_feature = np.reshape(test_feature, [-1, 81])
@@ -74,32 +73,11 @@ def train():
             if i % 5000 == 0:
                 print(
                     "After %d training step(s), cross_entropy mean on training batch is %g." % (i, loss_value))
-            # # testing
-            # if i % 10000 == 0 and i > 50000:
-            #     TEST_EXAMPLE = len(test_feature)
-            #     for i in range(TEST_EXAMPLE):
-            #         xs = test_feature[i]
-            #         ys = test_label[i]
-            #         xs = np.reshape(xs, [-1, 81])
-            #         ys = np.reshape(ys, [-1, 2])
-            #         y_pred, y_true, loss = sess.run([y, y_, cross_entropy_mean],
-            #                                         feed_dict={x: xs, y_: ys, drop_rate: 1})
-            #
-            #     print("After test, cross_entropy is %g" % loss)
 
-        # Validation
+        # Testing and validation
         print("train finished, validation start")
-        # TEST_EXAMPLE = len(test_feature)
-        # for i in range(TEST_EXAMPLE):
-        #     xs = test_feature[i]
-        #     ys = test_label[i]
-        #     xs = np.reshape(xs, [-1, 81])
-        #     ys = np.reshape(ys, [-1, 2])
         _, y_pred, y_true = sess.run([train_op, y, y_],
                                      feed_dict={x: test_feature, y_: test_label, drop_rate: 1})
-        # acc = tf.metrics.accuracy(y_true, y_pred)
-        # recall = tf.metrics.recall(y_true, y_pred)
-        # precision = tf.metrics.precision(y_true, y_pred)
         y_true = np.argmax(y_true, axis=1)
         y_pred = np.argmax(y_pred, axis=1)
         acc = accuracy_score(y_true, y_pred)

@@ -31,7 +31,7 @@ def subsample(features, labels):
     test_features = []
     test_labels = []
     for i in range(NUM_EXAMPLE):
-        if i % 10 == 3 or i % 10 == 4:
+        if i % 10 == 9 or i % 10 == 0:
             test_features = np.append(test_features, features[i])
             test_labels = np.append(test_labels, labels[i])
         else:
