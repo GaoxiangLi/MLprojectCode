@@ -1,4 +1,12 @@
 # PRVCNN
+Predicting regulatory variants with Convolutional Neural Network
+
+Gaoxiang Li
+
+Auburn University
+
+Advisor:Li Chen, Xiao Qin 
+
 Prediction Score：
 
 file score1.csv Allelic imbalance
