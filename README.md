@@ -1,6 +1,11 @@
-# MLproject
-Dataset: X.npy (features) Y.npy(labels)
-training :train_v3.py(test method included)
-inference method(CNN) is included in inference_v3.py
+# PRVCNN
+Prediction Score：
+file score1.csv Allelic imbalance
+file socre2.csv eQTL
+file socre3.csv dsQTL
+file score4.csv validated regulatory
 
-how to use: download the code and run train_v3.py
+How to use:
+Train: PRVCNN_train
+Test: PRVCNN_test1-4
+notes:input must be reshaped and change the string feature to one-hot code
