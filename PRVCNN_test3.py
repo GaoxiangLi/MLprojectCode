@@ -24,7 +24,7 @@ def train():
     x = tf.placeholder(tf.float32, [None, 81], name='x-input')
     y_ = tf.placeholder(tf.float32, [None, 2], name='y-input')
     drop_rate = tf.placeholder(tf.float32, name='drop_rate')
-    y, y_softmax = PRVCNN_inference.inference3(x, drop_rate)
+    y, y_softmax = PRVCNN_inference.inference4(x, drop_rate)
 
     global_step = tf.Variable(0, trainable=False)
     variable_averages = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)

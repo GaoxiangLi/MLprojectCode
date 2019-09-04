@@ -24,7 +24,8 @@ def train():
     x = tf.placeholder(tf.float32, [None, 81], name='x-input')
     y_ = tf.placeholder(tf.float32, [None, 2], name='y-input')
     drop_rate = tf.placeholder(tf.float32, name='drop_rate')
-    y, y_softmax = PRVCNN_inference.inference3(x, drop_rate)
+    # y, y_softmax = PRVCNN_inference.inference3(x, drop_rate)
+    y, y_softmax = PRVCNN_inference.inference4(x, drop_rate)
 
     global_step = tf.Variable(0, trainable=False)
     variable_averages = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)
@@ -42,10 +43,10 @@ def train():
         tf.local_variables_initializer().run()
         # load data
         print("Loading data")
-        training_feature = np.loadtxt('./data/training_feature3.csv', delimiter=',')
-        training_label = np.loadtxt('./data/training_label3.csv', delimiter=',')
-        test_feature = np.loadtxt('./data/t3_imbanlanced_feature.csv', delimiter=',')
-        test_label = np.loadtxt('./data/t3_imbanlanced_label.csv', delimiter=',')
+        training_feature = np.loadtxt('./data/training_feature.csv', delimiter=',')
+        training_label = np.loadtxt('./data/training_label.csv', delimiter=',')
+        test_feature = np.loadtxt('./data/t1_imbanlance_feature.csv', delimiter=',')
+        test_label = np.loadtxt('./data/t1_imbanlance_label.csv', delimiter=',')
 
         training_feature = np.reshape(training_feature, [-1, 81])
         test_feature = np.reshape(test_feature, [-1, 81])
@@ -160,8 +161,8 @@ def train():
         plt.ylim([0.0, 1.0])
         plt.xlabel('False Positive Rate or (1 - Specifity)')
         plt.ylabel('True Positive Rate or (Sensitivity)')
-        plt.title('dsQTL')
-        plt.legend(loc="allelc imbalanced")
+        plt.title('allelc imbalanced')
+        plt.legend(loc="lower right")
         plt.show()
         print("finished")
 

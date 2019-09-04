@@ -7,14 +7,16 @@ import matplotlib.pyplot as plt
 # load data
 training_feature = np.loadtxt('./data/training_feature3.csv', delimiter=',')
 training_label = np.loadtxt('./data/svm_train_label.csv', delimiter=',')
-test_feature = np.loadtxt('./data/test_feature3.csv', delimiter=',')
-test_label = np.loadtxt('./data/svm_test_label.csv', delimiter=',')
+test_feature = np.loadtxt('./data/t4_validated_feature.csv', delimiter=',')
+test_label = np.loadtxt('./data/t4_ml_label.csv', delimiter=',')
 
 clf = RandomForestClassifier(n_estimators=500, max_depth=None, random_state=0)
 clf.fit(training_feature, training_label)
 # score_rbf = clf_rbf.score(test_feature, test_label)
 # print("The score of rbf is : %f" % score_rbf)
-result = clf.predict(test_feature)
+result = clf.predict_proba(test_feature)
+result = result[:, 1:2]
+np.savetxt("./t4_RF.csv", result, delimiter=",")
 fpr, tpr, thresholds = roc_curve(test_label, result)
 roc_auc = auc(fpr, tpr)
 plt.plot(fpr, tpr, label='ROC curve (area = %0.3f)' % roc_auc)
