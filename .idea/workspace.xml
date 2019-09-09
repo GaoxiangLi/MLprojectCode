@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1f12801-aad3-4c98-b398-3f289ade49d8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/figure.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PRVCNN_inference.py" beforeDir="false" afterPath="$PROJECT_DIR$/PRVCNN_inference.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PRVCNN_test1.py" beforeDir="false" afterPath="$PROJECT_DIR$/PRVCNN_test1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PRVCNN_test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/PRVCNN_test2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PRVCNN_test3.py" beforeDir="false" afterPath="$PROJECT_DIR$/PRVCNN_test3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PRVCNN_test4.py" beforeDir="false" afterPath="$PROJECT_DIR$/PRVCNN_test4.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PRVCNN_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/PRVCNN_train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random_forest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random_forest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SVM.py" beforeDir="false" afterPath="$PROJECT_DIR$/SVM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/checkpoint" beforeDir="false" afterPath="$PROJECT_DIR$/log/checkpoint" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/model.ckpt-127392.data-00000-of-00001" beforeDir="false" afterPath="$PROJECT_DIR$/log/model.ckpt-127392.data-00000-of-00001" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/model.ckpt-127392.index" beforeDir="false" afterPath="$PROJECT_DIR$/log/model.ckpt-127392.index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log/model.ckpt-127392.meta" beforeDir="false" afterPath="$PROJECT_DIR$/log/model.ckpt-127392.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prob1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/prob1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/score4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/score4.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +28,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PRVCNN_inference.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
+            <state relative-caret-position="606">
               <caret line="154" column="35" lean-forward="true" selection-start-line="154" selection-start-column="35" selection-end-line="154" selection-end-column="35" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
@@ -63,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/PRVCNN_train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1691">
-              <caret line="99" column="8" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="31" />
+            <state relative-caret-position="209">
+              <caret line="47" column="30" lean-forward="true" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -87,7 +73,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PRVCNN_test4.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="304">
@@ -147,7 +133,6 @@
         <option value="$PROJECT_DIR$/PRVCS_train.py" />
         <option value="$PROJECT_DIR$/PRVCS_data_helper.py" />
         <option value="$PROJECT_DIR$/PRVCNN_test.py" />
-        <option value="$PROJECT_DIR$/PRVCNN_train.py" />
         <option value="$PROJECT_DIR$/SVM.py" />
         <option value="$PROJECT_DIR$/figure.py" />
         <option value="$PROJECT_DIR$/Random_forest.py" />
@@ -156,6 +141,7 @@
         <option value="$PROJECT_DIR$/PRVCNN_test3.py" />
         <option value="$PROJECT_DIR$/PRVCNN_test4.py" />
         <option value="$PROJECT_DIR$/PRVCNN_inference.py" />
+        <option value="$PROJECT_DIR$/PRVCNN_train.py" />
       </list>
     </option>
   </component>
@@ -170,7 +156,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -182,6 +167,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -453,9 +439,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project1/train2.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/project1/train2.py" />
     <entry file="file://$PROJECT_DIR$/../ML-practice-code/ML-Practice-code/Linear-Regression-master/venv/Lib/site-packages/tensorflow/python/framework/ops.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
@@ -464,21 +448,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ltrain.csv" />
-    <entry file="file://$PROJECT_DIR$/project1/train_v3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="988">
-          <caret line="118" column="30" lean-forward="true" selection-start-line="118" selection-start-column="30" selection-end-line="118" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/project1/train_v3.py" />
     <entry file="file://$PROJECT_DIR$/prob1.csv">
+      <provider selected="true" editor-type-id="csv-text-editor" />
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" rowLines="3" />
       </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/PRVCNN_data_helper.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -488,37 +463,37 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RF.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" rowLines="3" />
-      </provider>
       <provider selected="true" editor-type-id="csv-text-editor">
         <state relative-caret-position="-4386">
           <caret line="12" column="24" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/score4.csv">
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" rowLines="3" />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/score4.csv">
       <provider selected="true" editor-type-id="csv-text-editor">
         <state relative-caret-position="-22" />
       </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" rowLines="3" />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/t4_label.csv">
+      <provider selected="true" editor-type-id="csv-text-editor" />
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" rowLines="3" />
       </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/t4_RF.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" rowLines="3" />
-      </provider>
       <provider selected="true" editor-type-id="csv-text-editor">
         <state relative-caret-position="-3948">
           <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
         </state>
+      </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" rowLines="3" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PRVCNN_test2.py">
@@ -532,10 +507,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_score.csv">
+      <provider selected="true" editor-type-id="csv-text-editor" />
       <provider editor-type-id="csv-table-editor">
         <state showInfoPanel="true" rowLines="3" />
       </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/figure.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -551,16 +526,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="22" column="59" selection-start-line="22" selection-start-column="59" selection-end-line="22" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PRVCNN_train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1691">
-          <caret line="99" column="8" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -593,7 +558,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PRVCNN_inference.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
+        <state relative-caret-position="606">
           <caret line="154" column="35" lean-forward="true" selection-start-line="154" selection-start-column="35" selection-end-line="154" selection-end-column="35" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
@@ -608,6 +573,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PRVCNN_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="47" column="30" lean-forward="true" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
