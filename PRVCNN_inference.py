@@ -147,12 +147,15 @@ def inference3(input_tensor, drop_rate):
     return logit, logit_softmax
 
 
-def inference4(input_tensor, drop_rate):
+def inference4(input_tensor, args):
+
     input_tensor = tf.reshape(input_tensor, [-1, 1, 81, 1])
+    kernel_size = args.kernel_size
+    drop_rate = args.dropout_rate
     # input_tensor = tf.nn.local_response_normalization(input_tensor)
     with tf.variable_scope('layer1-conv1'):
         conv1_weights = tf.get_variable(
-            "weight", [1, 5, 1, 5],
+            "weight", [1,kernel_size , 1, 5],
             initializer=tf.contrib.layers.xavier_initializer())
         # tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(conv1_weights))
         conv1_biases = tf.get_variable("bias", 5, initializer=tf.contrib.layers.xavier_initializer())

@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 import PRVCNN_inference
 import matplotlib.pyplot as plt
+from sklearn.utils import shuffle
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
@@ -18,27 +19,23 @@ REGULARIZATION_RATE = 0.001
 TRAINING_STEPS = 100000
 MOVING_AVERAGE_DECAY = 0.99
 NUM_EXAMPLE = 60977
+num_epochs = 20
 
 
-def train():
+def train(args):
+    LEARNING_RATE_BASE = args.learning_rate
+    MOVING_AVERAGE_DECAY = args.learning_rate_decay
+    drop_rate = args.dropout_rate
     x = tf.placeholder(tf.float32, [None, 81], name='x-input')
     y_ = tf.placeholder(tf.float32, [None, 2], name='y-input')
-    drop_rate = tf.placeholder(tf.float32, name='drop_rate')
-    y, y_softmax = PRVCNN_inference.inference4(x, drop_rate)
-
+    # drop_rate = tf.placeholder(tf.float32, name='drop_rate')
+    y, y_softmax = PRVCNN_inference.inference4(x, args)
     global_step = tf.Variable(0, trainable=False)
     variable_averages = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)
     variables_averages_op = variable_averages.apply(tf.trainable_variables())
     cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(labels=tf.argmax(y_, 1), logits=y)
     cross_entropy_mean = tf.reduce_mean(cross_entropy)
     loss = cross_entropy_mean + tf.add_n(tf.get_collection('losses'))
-
-    # learning_rate = tf.train.exponential_decay(
-    #
-    #     LEARNING_RATE_BASE,
-    #     global_step,
-    #     NUM_EXAMPLE / BATCH_SIZE, LEARNING_RATE_DECAY,
-    #     staircase=True)
 
     train_op = tf.train.AdamOptimizer(LEARNING_RATE_BASE).minimize(loss, global_step=global_step)
     # train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss, global_step=global_step)
@@ -48,69 +45,63 @@ def train():
     with tf.Session() as sess:
         tf.global_variables_initializer().run()
         tf.local_variables_initializer().run()
+        saver = tf.train.Saver()
+
         # load data
         print("Loading data")
-        training_feature = np.loadtxt('./data/training_feature3.csv', delimiter=',')
-        training_label = np.loadtxt('./data/training_label3.csv', delimiter=',')
-        test_feature = np.loadtxt('./data/test_feature3.csv', delimiter=',')
-        test_label = np.loadtxt('./data/test_label3.csv', delimiter=',')
+        training_feature = np.loadtxt('./data/training_feature_all.csv', delimiter=',')
+        training_label = np.loadtxt('./data/training_label_all.csv', delimiter=',')
+        # training_feature = np.loadtxt('./data/training_feature3.csv', delimiter=',')
+        # training_label = np.loadtxt('./data/training_label3.csv', delimiter=',')
+        # test_feature = np.loadtxt('./data/test_feature3.csv', delimiter=',')
+        # test_label = np.loadtxt('./data/test_label3.csv', delimiter=',')
 
         training_feature = np.reshape(training_feature, [-1, 81])
-        test_feature = np.reshape(test_feature, [-1, 81])
         training_label = np.reshape(training_label, [-1, 2])
-        test_label = np.reshape(test_label, [-1, 2])
+        # test_feature = np.reshape(test_feature, [-1, 81])
+        # test_label = np.reshape(test_label, [-1, 2])
 
-        TRAINING_EXAMPLE = len(training_feature)
         print("train start")
-        for i in range(TRAINING_STEPS):
-            xs = training_feature[i % TRAINING_EXAMPLE]
-            ys = training_label[i % TRAINING_EXAMPLE]
-            # Batch
-            for j in range(BATCH_SIZE - 1):
-                xs = np.append(xs, training_feature[(i + j + 1) % TRAINING_EXAMPLE])
-                ys = np.append(ys, training_label[(i + j + 1) % TRAINING_EXAMPLE])
-            xs = np.reshape(xs, [-1, 81])
-            ys = np.reshape(ys, [-1, 2])
-            _, y_pred, y_true, losses = sess.run([train_op, y, y_, loss],
-                                                 feed_dict={x: xs, y_: ys, drop_rate: 1})
-            y_true = np.argmax(y_true, axis=1)
-            y_pred = np.argmax(y_pred, axis=1)
-            accurancy = accuracy_score(y_true, y_pred)
-            precision_1 = precision_score(y_true, y_pred, average='weighted')
-            recall_1 = recall_score(y_true, y_pred, average='weighted')
-            if i % 2000 == 0 and i != 0:
-                print(
-                    "After %d training step(s), losses on training batch is %g,recall is %g,precision is %g,accurancy is %g." % (
-                        i, losses, recall_1, precision_1, accurancy))
+        total_batch = int(60977 / BATCH_SIZE)
+        for epoch in range(num_epochs):
+            x_tmp, y_tmp = shuffle(training_feature, training_label)
+            for i in range(total_batch - 1):
+                xs = x_tmp[i * BATCH_SIZE:i * BATCH_SIZE + BATCH_SIZE]
+                ys = y_tmp[i * BATCH_SIZE:i * BATCH_SIZE + BATCH_SIZE]
+                xs = np.reshape(xs, [-1, 81])
+                ys = np.reshape(ys, [-1, 2])
+                _, y_pred, y_true, losses = sess.run([train_op, y, y_, loss], feed_dict={x: xs, y_: ys})
 
-        # Testing and validation
-        TESTING_EXAMPLE = len(test_feature)
-        print("train finished, validation start")
-        y_pred = []
-        for i in range(TESTING_EXAMPLE):
-            x_test = test_feature[i]
-            y_test = test_label[i]
-            x_test = np.reshape(x_test, [-1, 81])
-            y_test = np.reshape(y_test, [-1, 2])
-            _, y_pred_result = sess.run([train_op, y_softmax],
-                                        feed_dict={x: x_test, y_: y_test, drop_rate: 1})
-            y_pred.append(y_pred_result)
-        # Calculate metrics
-        y_pred = np.reshape(y_pred, [-1, 2])
-        y_prob = y_pred[:, 1:2]
-        np.savetxt("./train_score.csv", y_prob, delimiter=",")
-        y_true = np.argmax(test_label, axis=1)
-        y_pred = np.argmax(y_pred, axis=1)
-        acc = accuracy_score(y_true, y_pred)
-        precision_2 = precision_score(y_true, y_pred, average='weighted')
-        recall_2 = recall_score(y_true, y_pred, average='weighted')
-        f1 = 2 * (precision_2 * recall_2) / (precision_2 + recall_2)
-        matthews_correlation_coefficient1 = matthews_corrcoef(y_true, y_pred)
-        print("After test, acc in validation set is", acc)
-        print("Recall in validation set is", recall_2)
-        print("Precision in validation set is", precision_2)
-        print("F1_score in validation set is", f1)
-        print(("Matthews correlation is", matthews_correlation_coefficient1))
+        saver.save(sess, './log/PRVCNN')
+        print("Model saved in path: ./log/PRVCNN")
+        # # Testing and validation
+        #         # TESTING_EXAMPLE = len(test_feature)
+        #         # print("train finished, validation start")
+        #         # y_pred = []
+        #         # for i in range(TESTING_EXAMPLE):
+        #         #     x_test = test_feature[i]
+        #         #     y_test = test_label[i]
+        #         #     x_test = np.reshape(x_test, [-1, 81])
+        #         #     y_test = np.reshape(y_test, [-1, 2])
+        #         #     _, y_pred_result = sess.run([train_op, y_softmax],
+        #         #                                 feed_dict={x: x_test, y_: y_test, drop_rate: 1})
+        #         #     y_pred.append(y_pred_result)
+        #         # # Calculate metrics
+        #         # y_pred = np.reshape(y_pred, [-1, 2])
+        #         # y_prob = y_pred[:, 1:2]
+        #         # np.savetxt("./train_score.csv", y_prob, delimiter=",")
+        #         # y_true = np.argmax(test_label, axis=1)
+        #         # y_pred = np.argmax(y_pred, axis=1)
+        #         # acc = accuracy_score(y_true, y_pred)
+        #         # precision_2 = precision_score(y_true, y_pred, average='weighted')
+        #         # recall_2 = recall_score(y_true, y_pred, average='weighted')
+        #         # f1 = 2 * (precision_2 * recall_2) / (precision_2 + recall_2)
+        #         # matthews_correlation_coefficient1 = matthews_corrcoef(y_true, y_pred)
+        #         # print("After test, acc in validation set is", acc)
+        #         # print("Recall in validation set is", recall_2)
+        #         # print("Precision in validation set is", precision_2)
+        #         # print("F1_score in validation set is", f1)
+        #         # print(("Matthews correlation is", matthews_correlation_coefficient1))
 
         # Compute fpr, tpr, thresholds and roc auc
         # fpr, tpr, thresholds = roc_curve(y_true, y_prob, pos_label=1)
@@ -174,9 +165,7 @@ def train():
         # plt.show()
         # print("finished")
         #
-        # saver = tf.train.Saver()
-        # path = "log/"
-        # saver.save(sess, path + "model.ckpt", global_step=global_step)
+
 
 
 def main(argv=None):

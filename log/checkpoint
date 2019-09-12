@@ -1,2 +1,2 @@
-model_checkpoint_path: "model.ckpt-100229"
-all_model_checkpoint_paths: "model.ckpt-100229"
+model_checkpoint_path: "PRVCNN"
+all_model_checkpoint_paths: "PRVCNN"
