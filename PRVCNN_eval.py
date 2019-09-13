@@ -29,7 +29,8 @@ def eval(args):
         tf.global_variables_initializer().run()
         tf.local_variables_initializer().run()
         saver = tf.train.Saver()
-        saver.restore(sess, "./log/PRVCNN")
+        eval_name = args.eval_name
+        saver.restore(sess, "./log/%s"%(eval_name))
         test_feature = np.loadtxt('./data/test_feature3.csv', delimiter=',')
         test_label = np.loadtxt('./data/test_label3.csv', delimiter=',')
         # Testing and validation

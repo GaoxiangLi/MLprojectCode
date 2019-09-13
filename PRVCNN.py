@@ -33,9 +33,18 @@ def parse_arguments(parser):
     parser.add_argument('--train', dest='train', action='store_true', help='Use this option for train model')
     parser.set_defaults(train=False)
 
+    parser.add_argument('--model_name',  default='PRVCNN',
+                        help='The name saved for model and checkpoint')
+
     parser.add_argument('--evaluation', dest='evaluation', action='store_true',
                         help='Use this option for evaluate model')
     parser.set_defaults(evaluation=False)
+
+    parser.add_argument('--eval_name', default='PRVCNN',
+                        help='The name of model to be eval')
+
+    parser.add_argument('--test_name', default='PRVCNN',
+                        help='The name of model to be test')
 
     parser.add_argument('--test1', dest='test1', action='store_true', help='Use this option for test model1')
     parser.set_defaults(test=False)

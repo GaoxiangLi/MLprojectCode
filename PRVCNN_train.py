@@ -71,9 +71,9 @@ def train(args):
                 xs = np.reshape(xs, [-1, 81])
                 ys = np.reshape(ys, [-1, 2])
                 _, y_pred, y_true, losses = sess.run([train_op, y, y_, loss], feed_dict={x: xs, y_: ys})
-
-        saver.save(sess, './log/PRVCNN')
-        print("Model saved in path: ./log/PRVCNN")
+        model_name = args.model_name
+        saver.save(sess, './log/%s' % (model_name))
+        print("Model saved in path: ./log/%s" % (model_name))
         # # Testing and validation
         #         # TESTING_EXAMPLE = len(test_feature)
         #         # print("train finished, validation start")
@@ -165,7 +165,6 @@ def train(args):
         # plt.show()
         # print("finished")
         #
-
 
 
 def main(argv=None):

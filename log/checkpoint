@@ -1,2 +1,2 @@
-model_checkpoint_path: "PRVCNN"
-all_model_checkpoint_paths: "PRVCNN"
+model_checkpoint_path: "PRVCNN2"
+all_model_checkpoint_paths: "PRVCNN2"
