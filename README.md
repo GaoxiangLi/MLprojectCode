@@ -7,6 +7,34 @@ Auburn University
 
 Advisor:Li Chen, Xiao Qin 
 
+How to use:
+After download and unzip the file,  run:   python PRVCNN.py   in this directory.
+command:  python PRVCNN.py --h (for help to show all command line instruction)
+
+1.training:  --train       training model
+             --model_name  the model name you want to save default:PRVCNN
+
+2.evaluation --evaluation   evaluation model
+             --eval_name    the model name you want to eval default:PRVCNN
+
+3.testing:   --test1        test for allelic imbalance dataset
+             --test2        test for eQTL dataset
+             --test3        test for dsQTL dataset
+             --test4        test for validated regulatory dataset
+             --test_name    the model name you want to test default:PRVCNN
+
+4.Parameter  --batch_size default=16
+             --max_epoch  default=2000
+             --learning_rate default=0.0001
+             --learning_rate_decay default=0.99
+             --dropout_rate default=1
+             --L2_regularizer default=0.05
+             --kernel_size default=5
+
+
+
+
+
 Prediction Score：
 
 file score1.csv Allelic imbalance
@@ -23,10 +51,4 @@ Testing code: PRVCNN_test1-4
 
 notes:input must be reshaped and change the string feature to one-hot code
 
-How to use:
 
-1.training: After download and unzip the file, run PRVCNN_train.py (./PRVCNN_train.py) in this directory.
-
-2.testing:Run PRVCNN_test1.py (./PRVCNN_test1.py) PRVCNN_test2.py  PRVCNN_test3.py  PRVCNN_test4.py  four python files one by one.
-The result prediction score will be saved as score1.csv score2.csv score3.csv score4.csv.
-The result figure will be drawed automaticaly.
