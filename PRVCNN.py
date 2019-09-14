@@ -33,15 +33,8 @@ def parse_arguments(parser):
     parser.add_argument('--train', dest='train', action='store_true', help='Use this option for train model')
     parser.set_defaults(train=False)
 
-    parser.add_argument('--model_name',  default='PRVCNN',
+    parser.add_argument('--model_name', default='PRVCNN',
                         help='The name saved for model and checkpoint')
-
-    parser.add_argument('--evaluation', dest='evaluation', action='store_true',
-                        help='Use this option for evaluate model')
-    parser.set_defaults(evaluation=False)
-
-    parser.add_argument('--eval_name', default='PRVCNN',
-                        help='The name of model to be eval')
 
     parser.add_argument('--test_name', default='PRVCNN',
                         help='The name of model to be test')
@@ -49,13 +42,13 @@ def parse_arguments(parser):
     parser.add_argument('--test1', dest='test1', action='store_true', help='Use this option for test model1')
     parser.set_defaults(test=False)
 
-    parser.add_argument('--test2', dest='test2', action='store_true', help='Use this option for test model1')
+    parser.add_argument('--test2', dest='test2', action='store_true', help='Use this option for test model2')
     parser.set_defaults(test=False)
 
-    parser.add_argument('--test3', dest='test3', action='store_true', help='Use this option for test model1')
+    parser.add_argument('--test3', dest='test3', action='store_true', help='Use this option for test model3')
     parser.set_defaults(test=False)
 
-    parser.add_argument('--test4', dest='test4', action='store_true', help='Use this option for test model1')
+    parser.add_argument('--test4', dest='test4', action='store_true', help='Use this option for test model4')
     parser.set_defaults(test=False)
 
     parser.add_argument('--batch_size', type=int, default=16,
@@ -78,6 +71,51 @@ def parse_arguments(parser):
 
     parser.add_argument('--kernel_size', nargs='+', type=int, default=5,
                         help='The kernel size for convolutional layers')
+
+    parser.add_argument('--training_feature', default='./data/training_feature_all.csv',
+                        help='Training feature file')
+
+    parser.add_argument('--training_label', default='./data/training_label_all.csv',
+                        help='Training label file')
+
+    parser.add_argument('--testing1_feature', default='./data/t1_imbanlance_feature.csv',
+                        help='Testing1 feature file')
+
+    parser.add_argument('--testing1_label', default='./data/t1_imbanlance_label.csv',
+                        help='Testing1 label file')
+
+    parser.add_argument('--testing2_feature', default='./data/t2_eQTL_feature.csv',
+                        help='Testing2 feature file')
+
+    parser.add_argument('--testing2_label', default='./data/t2_eQTL_label.csv',
+                        help='Testing2 label file')
+
+    parser.add_argument('--testing3_feature', default='./data/t3_dsQTL_feature.csv',
+                        help='Testing3 feature file')
+
+    parser.add_argument('--testing3_label', default='./data/t3_dsQTL_label.csv',
+                        help='Testing3 label file')
+
+    parser.add_argument('--testing4_feature', default='./data/t4_validated_feature.csv',
+                        help='Testing4 feature file')
+
+    parser.add_argument('--testing4_label', default='./data/t4_validated_label.csv',
+                        help='Testing4 label file')
+
+    parser.add_argument('--evaluation', dest='evaluation', action='store_true',
+                        help='Use this option for evaluate model')
+
+    parser.add_argument('--eval_score_file', default='./result/train_score.csv',
+                        help='The score file to evaluate')
+
+    parser.add_argument('--eval_true_label', default='./data/test_label3.csv',
+                        help='The true label to evaluate')
+
+    parser.add_argument('--eval_dataset', type=int, default=0,
+                        help='The compared dataset to be evaluated, 0 for training set, 1 for allelic imbalance'
+                             '2 for eQTL, 3 for dsQTL, 4 for validated')
+
+    parser.set_defaults(evaluation=False)
 
     args = parser.parse_args()
 

@@ -90,32 +90,34 @@ def inference2(input_tensor, drop_rate):
     return logit, logit_softmax
 
 
-def inference3(input_tensor, drop_rate):
-    input_tensor = tf.reshape(input_tensor, [-1, 9, 9, 1])
-    input_tensor = tf.nn.local_response_normalization(input_tensor)
+def inference3(input_tensor, args):
+    input_tensor = tf.reshape(input_tensor, [-1, 74, 1])
+    kernel_size = args.kernel_size
+    drop_rate = args.dropout_rate
+    # input_tensor = tf.nn.local_response_normalization(input_tensor)
     with tf.variable_scope('layer1-conv1'):
         conv1_weights = tf.get_variable(
-            "weight", [CONV1_SIZE, CONV1_SIZE, 1, 5],
+            "weight", [kernel_size, 1, 5],
             initializer=tf.contrib.layers.xavier_initializer())
         # tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(conv1_weights))
         conv1_biases = tf.get_variable("bias", 5, initializer=tf.contrib.layers.xavier_initializer())
-        conv1 = tf.nn.conv2d(input_tensor, conv1_weights, strides=[1, 1, 1, 1], padding='SAME')
+        conv1 = tf.nn.conv1d(input_tensor, conv1_weights, stride=1, padding='SAME')
+        # conv1 = tf.nn.local_response_normalization(conv1)
         relu1 = tf.nn.leaky_relu(tf.nn.bias_add(conv1, conv1_biases))
 
     with tf.name_scope("layer2-pool1"):
-        pool1 = tf.nn.max_pool(relu1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
-
+        pool1 = tf.nn.max_pool1d(relu1, ksize=3, strides=1, padding="SAME")
     with tf.variable_scope("layer3-conv2"):
         conv2_weights = tf.get_variable(
-            "weight", [CONV2_SIZE, CONV2_SIZE, 5, 10],
+            "weight", [5, 5, 10],
             initializer=tf.contrib.layers.xavier_initializer())
         # tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(conv2_weights))
         conv2_biases = tf.get_variable("bias", 10, initializer=tf.contrib.layers.xavier_initializer())
-        conv2 = tf.nn.conv2d(pool1, conv2_weights, strides=[1, 1, 1, 1], padding='SAME')
+        conv2 = tf.nn.conv1d(pool1, conv2_weights, stride=1, padding='SAME')
         relu2 = tf.nn.leaky_relu(tf.nn.bias_add(conv2, conv2_biases))
 
     with tf.name_scope("layer4-pool2"):
-        pool2 = tf.nn.max_pool(relu2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+        pool2 = tf.nn.max_pool1d(relu2, ksize=3, strides=1, padding='SAME')
         pool_shape = pool2.get_shape().as_list()
         nodes = pool_shape[1] * pool_shape[2] * pool_shape[3]
         reshaped = tf.reshape(pool2, [-1, nodes])
@@ -148,14 +150,13 @@ def inference3(input_tensor, drop_rate):
 
 
 def inference4(input_tensor, args):
-
-    input_tensor = tf.reshape(input_tensor, [-1, 1, 81, 1])
+    input_tensor = tf.reshape(input_tensor, [-1, 1, 74, 1])
     kernel_size = args.kernel_size
     drop_rate = args.dropout_rate
     # input_tensor = tf.nn.local_response_normalization(input_tensor)
     with tf.variable_scope('layer1-conv1'):
         conv1_weights = tf.get_variable(
-            "weight", [1,kernel_size , 1, 5],
+            "weight", [1, kernel_size, 1, 5],
             initializer=tf.contrib.layers.xavier_initializer())
         # tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(REGULARIZATION_RATE)(conv1_weights))
         conv1_biases = tf.get_variable("bias", 5, initializer=tf.contrib.layers.xavier_initializer())
