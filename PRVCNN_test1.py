@@ -47,7 +47,7 @@ def test1(args):
         y_pred = np.reshape(y_pred, [-1, 2])
         y_prob = y_pred[:, 1:2]
         np.savetxt("./result/score1.csv", y_prob, delimiter=",")
-        print("training model prediction score for test1 saved in ./result path")
+        print("training model prediction score for test1 saved in ./result/score1.csv")
         y_true = np.argmax(test_label, axis=1)
         y_pred = np.argmax(y_pred, axis=1)
         acc = accuracy_score(y_true, y_pred)
