@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1f12801-aad3-4c98-b398-3f289ade49d8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/RF.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/figure.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prob1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/re" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/score.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/score1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/score2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/score3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/score4.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/t1_RF.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/t2_RF.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/t3_RF.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/t4_RF.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_score.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -178,7 +165,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-264" />
     <option name="y" value="113" />
     <option name="width" value="1750" />
@@ -365,10 +352,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4978903" visible="true" weight="0.22457068" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4978903" visible="true" weight="0.22457068" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24966975" />
       <window_info id="Favorites" order="2" sideWeight="0.5021097" side_tool="true" weight="0.22457068" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -379,7 +365,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.3286119" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3286119" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.501321" side_tool="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
