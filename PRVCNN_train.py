@@ -5,14 +5,7 @@ from sklearn.utils import shuffle
 import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-# LEARNING_RATE_BASE = 0.0001
-# LEARNING_RATE_DECAY = 0.99
-# BATCH_SIZE = 16
-# REGULARIZATION_RATE = 0.001
-# TRAINING_STEPS = 100000
-# MOVING_AVERAGE_DECAY = 0.99
-# NUM_EXAMPLE = 60977
-# num_epochs = 20
+
 
 
 def train(args):

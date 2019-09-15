@@ -48,7 +48,7 @@ def parse_arguments(parser):
     parser.add_argument('--batch_size', type=int, default=16,
                         help='The batch size for training')
 
-    parser.add_argument('--max_epoch', type=int, default=2000,
+    parser.add_argument('--max_epoch', type=int, default=20,
                         help='The max epoch for training')
 
     parser.add_argument('--learning_rate', type=float, default=0.0001,
@@ -69,14 +69,17 @@ def parse_arguments(parser):
     parser.add_argument('--evaluation', dest='evaluation', action='store_true',
                         help='Use this option for evaluate model')
 
-    parser.add_argument('--eval_score_file', default='./result/train_score.csv',
+    parser.add_argument('--eval_score_file', default='./result/score1.csv',
                         help='The score file to evaluate')
 
-    parser.add_argument('--eval_true_label', default='./data/test_label3.csv',
+    parser.add_argument('--eval_true_label', default='./data/t1_imbanlance_label.csv',
                         help='The true label to evaluate')
 
-    parser.add_argument('--eval_dataset', type=int, default=0,
-                        help='The compared dataset to be evaluated, 0 for training set, 1 for allelic imbalance'
+    parser.add_argument('--eval_name', default='Your method',
+                        help='The name of curve showed in figure')
+
+    parser.add_argument('--eval_dataset', type=int, default=1,
+                        help='The compared dataset to be evaluated,1 for allelic imbalance'
                              '2 for eQTL, 3 for dsQTL, 4 for validated')
 
     parser.set_defaults(evaluation=False)

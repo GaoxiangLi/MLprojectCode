@@ -23,7 +23,7 @@ def parse_arguments(parser):
     parser.add_argument('--training_feature', default='./data/training_feature_all.csv',
                         help='Training feature file')
 
-    parser.add_argument('--training_label', default='./data/svm_train_label.csv',
+    parser.add_argument('--training_label', default='./data/ML_training_label.csv',
                         help='Training label file')
 
     parser.add_argument('--testing_feature', default='./data/t1_imbanlance_feature.csv',
