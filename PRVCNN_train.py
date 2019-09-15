@@ -1,34 +1,28 @@
 import tensorflow as tf
 import numpy as np
 import PRVCNN_inference
-import matplotlib.pyplot as plt
 from sklearn.utils import shuffle
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import roc_curve
-from sklearn.metrics import auc
-from sklearn.metrics import matthews_corrcoef
 import os
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-LEARNING_RATE_BASE = 0.0001
-LEARNING_RATE_DECAY = 0.99
-BATCH_SIZE = 16
-REGULARIZATION_RATE = 0.001
-TRAINING_STEPS = 100000
-MOVING_AVERAGE_DECAY = 0.99
-NUM_EXAMPLE = 60977
-num_epochs = 20
+# LEARNING_RATE_BASE = 0.0001
+# LEARNING_RATE_DECAY = 0.99
+# BATCH_SIZE = 16
+# REGULARIZATION_RATE = 0.001
+# TRAINING_STEPS = 100000
+# MOVING_AVERAGE_DECAY = 0.99
+# NUM_EXAMPLE = 60977
+# num_epochs = 20
 
 
 def train(args):
     LEARNING_RATE_BASE = args.learning_rate
     MOVING_AVERAGE_DECAY = args.learning_rate_decay
-    drop_rate = args.dropout_rate
+    BATCH_SIZE = args.batch_size
+    num_epochs = args.max_epoch
     x = tf.placeholder(tf.float32, [None, 74], name='x-input')
     y_ = tf.placeholder(tf.float32, [None, 2], name='y-input')
-    y, y_softmax = PRVCNN_inference.inference4(x, args)
+    y, y_softmax = PRVCNN_inference.inference(x, args)
     global_step = tf.Variable(0, trainable=False)
     variable_averages = tf.train.ExponentialMovingAverage(MOVING_AVERAGE_DECAY, global_step)
     variables_averages_op = variable_averages.apply(tf.trainable_variables())
@@ -37,7 +31,6 @@ def train(args):
     loss = cross_entropy_mean + tf.add_n(tf.get_collection('losses'))
 
     train_op = tf.train.AdamOptimizer(LEARNING_RATE_BASE).minimize(loss, global_step=global_step)
-    # train_op = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss, global_step=global_step)
     with tf.control_dependencies([train_op, variables_averages_op]):
         train_op = tf.no_op(name='train')
 

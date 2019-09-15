@@ -1,50 +1,41 @@
 import tensorflow as tf
 import numpy as np
 import PRVCNN_inference
-import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
-from sklearn.metrics import roc_curve
-from sklearn.metrics import auc
 from sklearn.metrics import matthews_corrcoef
 import os
-
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-LEARNING_RATE_BASE = 0.0001
-LEARNING_RATE_DECAY = 0.99
-BATCH_SIZE = 16
-REGULARIZATION_RATE = 0.001
-TRAINING_STEPS = 100000
-MOVING_AVERAGE_DECAY = 0.99
-NUM_EXAMPLE = 60977
 
 
-def test4(args):
+def test(args):
     x = tf.placeholder(tf.float32, [None, 74], name='x-input')
     y_ = tf.placeholder(tf.float32, [None, 2], name='y-input')
-    y, y_softmax = PRVCNN_inference.inference4(x, args)
+    y, y_softmax = PRVCNN_inference.inference(x, args)
+
     with tf.Session() as sess:
         tf.global_variables_initializer().run()
         tf.local_variables_initializer().run()
         saver = tf.train.Saver()
         test_name = args.test_name
         saver.restore(sess, "./log/%s" % (test_name))
-
-        test_feature = np.loadtxt('./data/t4_validated_feature.csv', delimiter=',')
-        test_label = np.loadtxt('./data/t4_validated_label.csv', delimiter=',')
+        f_dir = args.testing_feature
+        l_dir = args.testing_label
+        test_feature = np.loadtxt('%s' % (f_dir), delimiter=',')
+        test_label = np.loadtxt('%s' % (l_dir), delimiter=',')
         test_feature = np.reshape(test_feature, [-1, 74])
         test_label = np.reshape(test_label, [-1, 2])
 
-        # Testing and validation
-        print("Testing4 start")
+        print("Testing1 start")
         y_pred = sess.run(y_softmax, feed_dict={x: test_feature})
 
         # Calculate metrics
         y_pred = np.reshape(y_pred, [-1, 2])
         y_prob = y_pred[:, 1:2]
-        np.savetxt("./result/score4.csv", y_prob, delimiter=",")
-        print("training model prediction score for test4 saved in ./result/score4.cs")
+        filename = args.result_score_file
+        np.savetxt("./result/%s" % (filename), y_prob, delimiter=",")
+        print("training model prediction score for test1 saved in ./result/%s" % (filename))
         y_true = np.argmax(test_label, axis=1)
         y_pred = np.argmax(y_pred, axis=1)
         acc = accuracy_score(y_true, y_pred)
@@ -60,10 +51,9 @@ def test4(args):
 
 
 
-
 def main(argv=None):
     # train()
-    test4()
+    test()
 
 
 if __name__ == '__main__':
